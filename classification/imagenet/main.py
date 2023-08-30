@@ -336,8 +336,8 @@ def main_worker(gpu, ngpus_per_node, args):
                 'best_acc1': best_acc1,
                 'optimizer': optimizer.state_dict(),
             }, is_best, os.path.join(args.output_dir, f'checkpoint{(epoch + 1):04}.pth'))
-            if epoch == args.start_epoch:
-                sanity_check(model.module.model_phi.state_dict(), args.pretrained)
+            #if epoch == args.start_epoch:
+             #   sanity_check(model.module.model_phi.state_dict(), args.pretrained)
 
     if not args.multiprocessing_distributed or (args.multiprocessing_distributed and args.rank % ngpus_per_node == 0):
         with open(os.path.join(args.output_dir, f'best_acc.txt'), 'w') as best_acc_result:
@@ -575,10 +575,15 @@ def save_prediction(val_loader, model, criterion, args):
 
 
 def save_checkpoint(state, is_best, filename='checkpoint.pth.tar'):
-    torch.save(state, filename)
-    if is_best:
-        name = filename.split('/')[-1]
-        shutil.copyfile(filename, filename.replace(name, 'model_best.pth.tar'))
+	if is_best:
+		torch.save(state, filename)
+		name = filename.split('/')[-1]
+		shutil.copyfile(filename, filename.replace(name, 'model_best.pth.tar'))
+    #torch.save(state, filename)
+    #if is_best:
+	#	torch.save(state, filename)
+    #   name = filename.split('/')[-1]
+    #   shutil.copyfile(filename, filename.replace(name, 'model_best.pth.tar'))
 
 
 def sanity_check(state_dict, pretrained_weights):
