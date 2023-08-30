@@ -13,6 +13,9 @@ We recommend configuring the environment through [`conda`](https://conda.io/proj
 ```sh
 conda env create -f environment.yml
 conda activate card
+
+cd apex
+python setup.py
 ```
 
 The name of the environment is set to **card** by default. You can modify the first line of the `environment.yml` file to set the new environment's name.
